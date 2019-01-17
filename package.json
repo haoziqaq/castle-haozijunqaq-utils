@@ -1,6 +1,6 @@
 {
   "name": "castle-haozijunqaq-utils",
-  "version": "1.1.7",
+  "version": "1.2.1",
   "description": "Common development utils",
   "main": "index.js",
   "scripts": {
