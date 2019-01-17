@@ -95,19 +95,19 @@ export default {
         })
     },
 
-    $setSessionStorage(key, value) {
+    $setSession(key, value) {
         window.sessionStorage.setItem(key, JSON.stringify(value));
     },
 
-    $getSessionStorage(key) {
+    $getSession(key) {
         return JSON.parse(window.sessionStorage.getItem(key));
     },
 
-    $setLocalStorage(key, value) {
+    $setLocal(key, value) {
         window.localStorage.setItem(key, JSON.stringify(value));
     },
 
-    $getLocalStorage(key) {
+    $getLocal(key) {
         return JSON.parse(window.localStorage.getItem(key));
     },
 }
