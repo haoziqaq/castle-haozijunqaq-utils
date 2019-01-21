@@ -4,7 +4,7 @@ export default {
      * @param blob {File | Blob} 文件blob | file 对象
      * @param fileName {String} 文件名
      */
-    $download(blob, fileName) {
+    download(blob, fileName) {
         if ('download' in document.createElement('a')) { // 非IE下载
             const elink = document.createElement('a');
             elink.download = fileName;
@@ -24,7 +24,7 @@ export default {
      * @param imgElement
      * @return {Promise<any>}
      */
-    $imgLoad(imgElement) {
+    imgLoad(imgElement) {
         return new Promise((resolve) => {
             imgElement.onload = (result) => {
                 resolve(result)
@@ -40,7 +40,7 @@ export default {
      * @param mime {String} 文件类型
      * @return {Promise<*|File>}
      */
-    async $compressImage(imgFile, widthScale = 1, heightScale = 1, mime = 'image/png') {
+    async compressImage(imgFile, widthScale = 1, heightScale = 1, mime = 'image/png') {
         let canvas = document.createElement('canvas');
         let context = canvas.getContext('2d');
         let fileName = imgFile.name;
@@ -48,7 +48,7 @@ export default {
         let imgElement = document.createElement('img');
         imgElement.src = imgUrl;
         document.body.appendChild(imgElement);
-        await this.$imgLoad(imgElement);
+        await this.imgLoad(imgElement);
         let imgWidth = imgElement.width;
         let imgHeight = imgElement.height;
         canvas.width = imgWidth * widthScale;
@@ -65,7 +65,7 @@ export default {
      * @param fileName {String} 文件名(后缀强制为mime类型)
      * @return {File}
      */
-    $convertBase64ToFile(base64, fileName) {
+    convertBase64ToFile(base64, fileName) {
         let arr = base64.split(',');
         let mime = arr[0].match(/:(.*?);/)[1];
         let bstr = window.atob(arr[1]);
@@ -82,7 +82,7 @@ export default {
      * @param {File} file 文件对象
      * @return {Promise<any>}
      */
-    $convertFileToBase64(file) {
+    convertFileToBase64(file) {
         return new Promise((resolve, reject) => {
             let fileReader = new FileReader();
             fileReader.onload = () => {
@@ -95,19 +95,19 @@ export default {
         })
     },
 
-    $setSession(key, value) {
+    setSession(key, value) {
         window.sessionStorage.setItem(key, JSON.stringify(value));
     },
 
-    $getSession(key) {
+    getSession(key) {
         return JSON.parse(window.sessionStorage.getItem(key));
     },
 
-    $setLocal(key, value) {
+    setLocal(key, value) {
         window.localStorage.setItem(key, JSON.stringify(value));
     },
 
-    $getLocal(key) {
+    getLocal(key) {
         return JSON.parse(window.localStorage.getItem(key));
     },
 }
