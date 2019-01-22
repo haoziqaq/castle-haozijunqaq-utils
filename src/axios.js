@@ -26,19 +26,20 @@ service.getData = (url, params, options = {}) => {
         }
     };
     if (params) {
+        let params = Object.assign(queryParams.params, params);
         queryParams = {
-            params: {
-                ...params,
-                _t: new Date().getTime()
-            }
+            params
         }
     }
     queryParams = Object.assign(queryParams, options);
-    return new Promise(async (resolve, reject) => {
-        let res = await service.get(url, queryParams).catch(error => {
+    return new Promise((resolve, reject) => {
+        service.get(url, queryParams)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
             reject(error);
         });
-        resolve(res);
     });
 };
 
@@ -52,37 +53,44 @@ service.getBlob = (url, params, options = {}) => {
         responseType: 'blob'
     };
     if (params) {
+        let params = Object.assign(queryParams.params, params);
         queryParams = {
-            params: {
-                ...params,
-                _t: new Date().getTime()
-            }
+            params
         }
     }
     queryParams = Object.assign(queryParams, config, options);
-    return new Promise(async (resolve, reject) => {
-        let res = await service.get(url, queryParams).catch(error => {
+    return new Promise((resolve, reject) => {
+        service.get(url, queryParams)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
                 reject(error);
             });
-        resolve(res);
     });
 };
 
 service.postData = (url, params, options = {}) => {
-    return new Promise(async (resolve, reject) => {
-        let res = await service.post(url, qs.stringify(params), options).catch(error => {
+    return new Promise((resolve, reject) => {
+        service.post(url, qs.stringify(params), options)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
                 reject(error);
             });
-        resolve(res);
     });
 };
 
 service.postJSON = (url, params, options = {}) => {
-    return new Promise(async (resolve, reject) => {
-        let res = await service.post(url, params, options).catch(error => {
+    return new Promise((resolve, reject) => {
+        service.post(url, params, options)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
                 reject(error);
             });
-        resolve(res);
     });
 };
 
@@ -100,11 +108,14 @@ service.postMultipart = (url, params, options = {}) => {
         })
     }
     options = Object.assign(config, options);
-    return new Promise(async (resolve, reject) => {
-        let res = await service.post(url, formdata, options).catch(error => {
+    return new Promise((resolve, reject) => {
+        service.post(url, formdata, options)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
                 reject(error);
             });
-        resolve(res);
     });
 };
 
