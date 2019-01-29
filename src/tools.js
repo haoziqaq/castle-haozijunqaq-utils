@@ -57,7 +57,7 @@ export default {
                 context.drawImage(imgElement, 0 ,0 ,canvas.width, canvas.height);
                 let base64 = canvas.toDataURL(mime);
                 document.body.removeChild(imgElement);
-                resolve(this.convertBase64ToFile(base64, fileName))
+                resolve(this.$convertBase64ToFile(base64, fileName))
             }).catch(e => {
                 reject(e)
             })

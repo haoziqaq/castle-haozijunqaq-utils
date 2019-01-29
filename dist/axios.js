@@ -34,7 +34,7 @@ service.interceptors.request.use(function (config) {
     Promise.reject(error);
 });
 
-service.getData = function (url, params) {
+service.getData = function (url, par) {
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var queryParams = {
@@ -42,10 +42,10 @@ service.getData = function (url, params) {
             _t: new Date().getTime()
         }
     };
-    if (params) {
-        var _params = Object.assign(queryParams.params, _params);
+    if (par) {
+        var params = Object.assign(queryParams.params, par);
         queryParams = {
-            params: _params
+            params: params
         };
     }
     queryParams = Object.assign(queryParams, options);
@@ -58,7 +58,7 @@ service.getData = function (url, params) {
     });
 };
 
-service.getBlob = function (url, params) {
+service.getBlob = function (url, par) {
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var queryParams = {
@@ -69,10 +69,10 @@ service.getBlob = function (url, params) {
     var config = {
         responseType: 'blob'
     };
-    if (params) {
-        var _params2 = Object.assign(queryParams.params, _params2);
+    if (par) {
+        var params = Object.assign(queryParams.params, par);
         queryParams = {
-            params: _params2
+            params: params
         };
     }
     queryParams = Object.assign(queryParams, config, options);

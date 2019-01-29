@@ -19,14 +19,14 @@ service.interceptors.request.use(config => {
     Promise.reject(error)
 });
 
-service.getData = (url, params, options = {}) => {
+service.getData = (url, par, options = {}) => {
     let queryParams = {
         params: {
             _t: new Date().getTime()
         }
     };
-    if (params) {
-        let params = Object.assign(queryParams.params, params);
+    if (par) {
+        let params = Object.assign(queryParams.params, par);
         queryParams = {
             params
         }
@@ -38,12 +38,12 @@ service.getData = (url, params, options = {}) => {
                 resolve(res);
             })
             .catch(error => {
-            reject(error);
-        });
+                reject(error);
+            });
     });
 };
 
-service.getBlob = (url, params, options = {}) => {
+service.getBlob = (url, par, options = {}) => {
     let queryParams = {
         params: {
             _t: new Date().getTime()
@@ -52,8 +52,8 @@ service.getBlob = (url, params, options = {}) => {
     let config = {
         responseType: 'blob'
     };
-    if (params) {
-        let params = Object.assign(queryParams.params, params);
+    if (par) {
+        let params = Object.assign(queryParams.params, par);
         queryParams = {
             params
         }
