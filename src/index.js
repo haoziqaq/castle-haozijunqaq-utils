@@ -4,7 +4,6 @@ import e from './exp'
 import t from './tools'
 import v from './plugins/vue'
 import * as m from './md5'
-import l from 'lodash'
 
 
 export const formatter = f;
@@ -13,4 +12,3 @@ export const tools = t;
 export const vuePlugin = v;
 export const md5 = m;
 export const axios = a;
-export const _ = l;
