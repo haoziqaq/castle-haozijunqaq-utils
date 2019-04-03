@@ -1,4 +1,5 @@
 export default {
+
     /**
      * 浏览器直接下载文件
      * @param blob {File | Blob} 文件blob | file 对象
