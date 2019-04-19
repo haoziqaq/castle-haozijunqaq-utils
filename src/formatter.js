@@ -134,6 +134,82 @@ export default {
         }
         return fmt;
     },
+    $formatUnit(num, options) {
+        let result;
+        let getChangeUnit = function (options) {
+            result = result + options;
+        };
+        if (options !== undefined) {
+            switch (options) {
+                case 'k':
+                    result = num / 1000;
+                    getChangeUnit(options);
+                    break;
+
+                case 'w':
+                    result = num / 10000;
+                    getChangeUnit(options);
+                    break
+                case 'kw':
+                    result = num / 10000000;
+                    getChangeUnit(options);
+                    break;
+                case 'e':
+                    result = num / 100000000;
+                    getChangeUnit(options);
+                    break;
+            }
+        } else {
+            if (num < 10000) {
+                result = num / 1000 + 'k';
+            } else if (num >= 10000 && num < 9999999) {
+                result = num / 10000 + 'w'
+            } else if (num >= 10000000 && num < 99999999) {
+                result = num / 10000000 + 'kw'
+            } else if (num >= 100000000) {
+                result = num / 100000000 + 'e'
+            }
+        }
+        return result;
+    },
+    $formatUnitCN(num, options) {
+        let result;
+        let getChangeUnit = function (options) {
+            result = result + options;
+        };
+        if (options !== undefined) {
+            switch (options) {
+                case '千':
+                    result = num / 1000;
+                    getChangeUnit(options);
+                    break;
+
+                case '万':
+                    result = num / 10000;
+                    getChangeUnit(options);
+                    break
+                case '千万':
+                    result = num / 10000000;
+                    getChangeUnit(options);
+                    break;
+                case '亿':
+                    result = num / 100000000;
+                    getChangeUnit(options);
+                    break;
+            }
+        } else {
+            if (num < 10000) {
+                result = num / 1000 + '千';
+            } else if (num >= 10000 && num < 9999999) {
+                result = num / 10000 + '万'
+            } else if (num >= 10000000 && num < 99999999) {
+                result = num / 10000000 + '千万'
+            } else if (num >= 100000000) {
+                result = num / 100000000 + '亿'
+            }
+        }
+        return result;
+    }
     
 }
 
