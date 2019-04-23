@@ -1,8 +1,8 @@
-export declare const exp: object;
-export declare const formatter: object;
-export declare const md5: object;
-export declare const tools: object;
-export declare const vuePlugin: object;
-export declare function reactPlugin(): object;
-export declare function axios(): void;
+export declare const exp: any;
+export declare const formatter: any;
+export declare const md5: any;
+export declare const tools: any;
+export declare const vuePlugin: any;
+export declare function reactPlugin(): any;
+export declare const axios: any;
 
