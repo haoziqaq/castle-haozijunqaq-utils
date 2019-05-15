@@ -28,7 +28,8 @@ const simplePWD = /^.*(?=.{6,})(?=.*\d).*$/;
 const URL = /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
 //中国邮政编码
 const postalCode = /[1-9]\d{5}(?!\d)/;
-
+//邮箱验证
+const email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
 export default {
     $isMobilephone: value => mobilephone.test(value),
     $isTelephone: value => telephone.test(value),
@@ -45,4 +46,5 @@ export default {
     $isSimplePWD: value => simplePWD.test(value),
     $isURL: value => URL.test(value),
     $isPostalCode: value => postalCode.test(value),
+    $isEmail: value => email.test(value)
 }

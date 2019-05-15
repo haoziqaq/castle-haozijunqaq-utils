@@ -33,7 +33,8 @@ var simplePWD = /^.*(?=.{6,})(?=.*\d).*$/;
 var URL = /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
 //中国邮政编码
 var postalCode = /[1-9]\d{5}(?!\d)/;
-
+//邮箱验证
+var email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
 exports.default = {
     $isMobilephone: function $isMobilephone(value) {
         return mobilephone.test(value);
@@ -79,5 +80,8 @@ exports.default = {
     },
     $isPostalCode: function $isPostalCode(value) {
         return postalCode.test(value);
+    },
+    $isEmail: function $isEmail(value) {
+        return email.test(value);
     }
 };
