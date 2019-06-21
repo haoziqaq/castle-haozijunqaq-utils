@@ -26,7 +26,8 @@ service.interceptors.response.use(
         return response;
     },
     error => {  //响应错误处理
-        return Promise.reject(error)
+        handleGlobalServerCode(error.response);
+        return error.response;
     }
 );
 

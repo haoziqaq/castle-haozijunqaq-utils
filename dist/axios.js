@@ -40,7 +40,8 @@ service.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     //响应错误处理
-    return Promise.reject(error);
+    handleGlobalServerCode(error.response);
+    return error.response;
 });
 
 service.getData = function (url, par) {
