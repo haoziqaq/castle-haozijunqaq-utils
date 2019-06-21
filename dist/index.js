@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.axios = exports.md5 = exports.vuePlugin = exports.tools = exports.exp = exports.formatter = undefined;
+exports.axios = exports.md5 = exports.reactPlugin = exports.vuePlugin = exports.tools = exports.exp = exports.formatter = undefined;
 
 var _formatter = require('./formatter');
 
@@ -25,6 +25,10 @@ var _vue = require('./plugins/vue');
 
 var _vue2 = _interopRequireDefault(_vue);
 
+var _react = require('./plugins/react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _md = require('./md5');
 
 var m = _interopRequireWildcard(_md);
@@ -37,5 +41,6 @@ var formatter = exports.formatter = _formatter2.default;
 var exp = exports.exp = _exp2.default;
 var tools = exports.tools = _tools2.default;
 var vuePlugin = exports.vuePlugin = _vue2.default;
+var reactPlugin = exports.reactPlugin = _react2.default;
 var md5 = exports.md5 = m;
 var axios = exports.axios = _axios2.default;

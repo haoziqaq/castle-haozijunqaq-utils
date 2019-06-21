@@ -16,7 +16,7 @@ const mapChildren = (arr, result, pidKey) => {
     if (result.length === 0) {
         return
     }
-    for (let i = 0; i< result.length; i++) {
+    for (let i = 0; i < result.length; i++) {
         result[i].children = getChildren(arr, result[i].id, pidKey);
         mapChildren(arr, result[i].children, pidKey);
     }
@@ -49,7 +49,7 @@ export default {
                 result.push(arr[i]);
             }
         }
-        for (let i = 0; i< result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             result[i].children = getChildren(arr, result[i].id, pidKey);
             mapChildren(arr, result[i].children, pidKey);
         }
@@ -114,17 +114,17 @@ export default {
         if (!time) return '';
         let date = typeof time === 'number' ? new Date(time) : time;
         const expList = {
-            "M+" : date.getMonth() + 1,                //月份
-            "d+" : date.getDate(),                    //日
-            "H+" : date.getHours(),                   //小时
-            "h+" : date.getHours() <= 12 ? date.getHours() : date.getHours() - 12, //12制小时
-            "m+" : date.getMinutes(),                 //分
-            "s+" : date.getSeconds(),                 //秒
-            "q+" : Math.floor((date.getMonth() + 3) / 3), //季度
-            "S" : date.getMilliseconds(),             //毫秒
+            "M+": date.getMonth() + 1,                //月份
+            "d+": date.getDate(),                    //日
+            "H+": date.getHours(),                   //小时
+            "h+": date.getHours() <= 12 ? date.getHours() : date.getHours() - 12, //12制小时
+            "m+": date.getMinutes(),                 //分
+            "s+": date.getSeconds(),                 //秒
+            "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+            "S": date.getMilliseconds(),             //毫秒
             "n": date.getHours() < 12 ? 'AM' : 'PM', //上午am,下午pm
         };
-        if(/(y+)/.test(fmt))
+        if (/(y+)/.test(fmt))
             fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
         for (let exp in expList) {
             if (new RegExp(`(${exp})`).test(fmt)) {
@@ -134,7 +134,99 @@ export default {
         }
         return fmt;
     },
-    
+    $formatUnit(num, options) {
+        let result;
+        let getChangeUnit = function (options) {
+            result = result + options;
+        };
+        if (options !== undefined) {
+            switch (options) {
+                case 'k':
+                    result = num / 1000;
+                    getChangeUnit(options);
+                    break;
+
+                case 'w':
+                    result = num / 10000;
+                    getChangeUnit(options);
+                    break
+                case 'kw':
+                    result = num / 10000000;
+                    getChangeUnit(options);
+                    break;
+                case 'e':
+                    result = num / 100000000;
+                    getChangeUnit(options);
+                    break;
+            }
+        } else {
+            if (num < 10000) {
+                result = num / 1000 + 'k';
+            } else if (num >= 10000 && num < 9999999) {
+                result = num / 10000 + 'w'
+            } else if (num >= 10000000 && num < 99999999) {
+                result = num / 10000000 + 'kw'
+            } else if (num >= 100000000) {
+                result = num / 100000000 + 'e'
+            }
+        }
+        return result;
+    },
+    $formatUnitCN(num, options) {
+        let result;
+        let getChangeUnit = function (options) {
+            result = result + options;
+        };
+        if (options !== undefined) {
+            switch (options) {
+                case '千':
+                    result = num / 1000;
+                    getChangeUnit(options);
+                    break;
+
+                case '万':
+                    result = num / 10000;
+                    getChangeUnit(options);
+                    break
+                case '千万':
+                    result = num / 10000000;
+                    getChangeUnit(options);
+                    break;
+                case '亿':
+                    result = num / 100000000;
+                    getChangeUnit(options);
+                    break;
+            }
+        } else {
+            if (num < 10000) {
+                result = num / 1000 + '千';
+            } else if (num >= 10000 && num < 9999999) {
+                result = num / 10000 + '万'
+            } else if (num >= 10000000 && num < 99999999) {
+                result = num / 10000000 + '千万'
+            } else if (num >= 100000000) {
+                result = num / 100000000 + '亿'
+            }
+        }
+        return result;
+    },
+    $price_Cn(str) {
+        var num = parseInt(str);
+        var strOutput = "",
+            strUnit = '仟佰拾亿仟佰拾万仟佰拾元角分';
+        num += "00";
+        var intPos = num.indexOf('.');
+        if (intPos >= 0) {
+            num = num.substring(0, intPos) + num.substr(intPos + 1, 2);
+        }
+        strUnit = strUnit.substr(strUnit.length - num.length);
+        for (var i = 0; i < num.length; i++) {
+            strOutput += '零壹贰叁肆伍陆柒捌玖'.substr(num.substr(i, 1), 1) + strUnit.substr(i, 1);
+        }
+        return strOutput.replace(/零角零分$/, '整').replace(/零[仟佰拾]/g, '零').replace(/零{2,}/g, '零').replace(/零([亿|万])/g, '$1').replace(/零+元/, '元').replace(/亿零{0,3}万/, '亿').replace(/^元/, "零元")
+
+    }
+
 }
 
 
