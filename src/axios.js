@@ -3,7 +3,6 @@ import qs from 'qs'
 
 let headerExceptRequestURLs = [];
 let headerOptions = [];
-let handleGlobalServerException = (response) => {};
 let handleGlobalServerCode = (error) => {};
 
 const service = axios.create();
@@ -27,7 +26,6 @@ service.interceptors.response.use(
         return response;
     },
     error => {  //响应错误处理
-        handleGlobalServerException(error);
         return Promise.reject(error)
     }
 );
@@ -152,11 +150,7 @@ service.changeIsWithCredentials = (isWithCredentials) => {
     service.withCredentials = isWithCredentials;
 };
 
-service.setHandleGlobalServerException = (fn) => {
-    handleGlobalServerException = fn;
-};
-
-service.setHandleGlobalServerCode = (fn) => {
+service.setServerCodeHandler = (fn) => {
     handleGlobalServerCode = fn;
 };
 

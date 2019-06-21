@@ -16,7 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var headerExceptRequestURLs = [];
 var headerOptions = [];
-var handleGlobalServerException = function handleGlobalServerException(response) {};
 var handleGlobalServerCode = function handleGlobalServerCode(error) {};
 
 var service = _axios2.default.create();
@@ -41,7 +40,6 @@ service.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     //响应错误处理
-    handleGlobalServerException(error);
     return Promise.reject(error);
 });
 
@@ -170,11 +168,7 @@ service.changeIsWithCredentials = function (isWithCredentials) {
     service.withCredentials = isWithCredentials;
 };
 
-service.setHandleGlobalServerException = function (fn) {
-    handleGlobalServerException = fn;
-};
-
-service.setHandleGlobalServerCode = function (fn) {
+service.setServerCodeHandler = function (fn) {
     handleGlobalServerCode = fn;
 };
 
