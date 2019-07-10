@@ -151,7 +151,7 @@ service.changeIsWithCredentials = (isWithCredentials) => {
     service.withCredentials = isWithCredentials;
 };
 
-service.setServerCodeHandler = (fn) => {
+service.setResultCodeHandler = (fn) => {
     handleGlobalServerCode = fn;
 };
 
