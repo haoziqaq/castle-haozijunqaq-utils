@@ -6,8 +6,8 @@ export default {
      * @param args 需要被解耦的参数集
      */
     $curring(fn, ...args) {
-        return function(..._args) {
-            fn.call(this, ...args, ..._args);
+        return (..._args) => {
+            return fn.call(this, ...args, ..._args);
         }
     },
 
