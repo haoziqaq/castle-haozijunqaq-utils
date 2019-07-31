@@ -3,7 +3,32 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 exports.default = {
+
+    /**
+     * 函数柯里化
+     * @param fn {function} 需要函数柯里化的函数
+     * @param args 需要被解耦的参数集
+     */
+    $curring: function $curring(fn) {
+        var _this = this;
+
+        for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            args[_key - 1] = arguments[_key];
+        }
+
+        return function () {
+            for (var _len2 = arguments.length, _args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                _args[_key2] = arguments[_key2];
+            }
+
+            fn.call.apply(fn, [_this].concat(_toConsumableArray(args), _args));
+        };
+    },
+
 
     /**
      * 浏览器直接下载文件
@@ -53,7 +78,7 @@ exports.default = {
     $compressImage: function $compressImage(imgFile) {
         var widthScale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-        var _this = this;
+        var _this2 = this;
 
         var heightScale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
         var mime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'image/png';
@@ -66,7 +91,7 @@ exports.default = {
             var imgElement = document.createElement('img');
             imgElement.src = imgUrl;
             document.body.appendChild(imgElement);
-            _this.$imgLoad(imgElement).then(function (res) {
+            _this2.$imgLoad(imgElement).then(function (res) {
                 var imgWidth = imgElement.width;
                 var imgHeight = imgElement.height;
                 canvas.width = imgWidth * widthScale;
@@ -74,7 +99,7 @@ exports.default = {
                 context.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
                 var base64 = canvas.toDataURL(mime);
                 document.body.removeChild(imgElement);
-                resolve(_this.$convertBase64ToFile(base64, fileName));
+                resolve(_this2.$convertBase64ToFile(base64, fileName));
             }).catch(function (e) {
                 reject(e);
             });

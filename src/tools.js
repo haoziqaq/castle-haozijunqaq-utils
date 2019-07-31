@@ -1,6 +1,17 @@
 export default {
 
     /**
+     * 函数柯里化
+     * @param fn {function} 需要函数柯里化的函数
+     * @param args 需要被解耦的参数集
+     */
+    $curring(fn, ...args) {
+        return (..._args) => {
+            fn.call(this, ...args, ..._args);
+        }
+    },
+
+    /**
      * 浏览器直接下载文件
      * @param blob {File | Blob} 文件blob | file 对象
      * @param fileName {String} 文件名
