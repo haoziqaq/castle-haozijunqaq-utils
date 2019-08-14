@@ -203,5 +203,24 @@ exports.default = {
     },
     $getLocal: function $getLocal(key) {
         return JSON.parse(window.localStorage.getItem(key));
+    },
+
+    //获取当前月的最后一天
+    $getCurrentMonthLastDay: function $getCurrentMonthLastDay() {
+        var date = new Date();
+        var currentMonth = date.getMonth();
+        var nextMonth = ++currentMonth;
+        var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+        var oneDay = 1000 * 60 * 60 * 24;
+        var lastTime = new Date(nextMonthFirstDay - oneDay);
+        var month = parseInt(lastTime.getMonth() + 1);
+        var day = lastTime.getDate();
+        if (month < 10) {
+            month = '0' + month;
+        }
+        if (day < 10) {
+            day = '0' + day;
+        }
+        return new Date(date.getFullYear() + '-' + month + '-' + day);
     }
 };
