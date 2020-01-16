@@ -191,5 +191,33 @@ export default {
             day = '0' + day
         }
         return new Date(date.getFullYear() + '-' + month + '-' + day);
+    },
+    //获取当前日期
+    $getToday() {
+        let day = new Date();
+        day.setTime(day.getTime());
+        let month = null;
+        let today = null;
+        if (day.getMonth() + 1 < 10) {
+            month = '0' + (day.getMonth() + 1)
+        }
+        else {
+            month = day.getMonth() + 1
+        }
+        if (day.getDate() < 10) {
+            today = '0' + day.getDate();
+        }
+        else {
+            today = day.getDate()
+        }
+        return day.getFullYear() + "-" + month + "-" + today;
+    },
+    //判断是否金额数字
+    $checkMoney(val) {
+        if (val === '') {
+            return true
+        }
+        let money = /^([1-9][\d]{0,9}|0)(\.[\d]{1,2})?$/;
+        return money.test(val)
     }
 }
