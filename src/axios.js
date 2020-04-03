@@ -6,7 +6,7 @@ let headerOptions = [];
 let handleGlobalServerCode = (error) => {};
 
 const service = axios.create();
-service.withCredentials = true;
+service.defaults.withCredentials = true;
 
 service.interceptors.request.use(config => {
     let hasUrl = headerExceptRequestURLs.some(url => url === config.url);
@@ -148,7 +148,7 @@ service.setHeadersExcept = (URLs = []) => {
 };
 
 service.changeIsWithCredentials = (isWithCredentials) => {
-    service.withCredentials = isWithCredentials;
+    service.defaults.withCredentials = isWithCredentials;
 };
 
 service.setResultCodeHandler = (fn) => {

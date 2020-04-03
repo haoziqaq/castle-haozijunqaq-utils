@@ -19,7 +19,7 @@ var headerOptions = [];
 var handleGlobalServerCode = function handleGlobalServerCode(error) {};
 
 var service = _axios2.default.create();
-service.withCredentials = true;
+service.defaults.withCredentials = true;
 
 service.interceptors.request.use(function (config) {
     var hasUrl = headerExceptRequestURLs.some(function (url) {
@@ -166,7 +166,7 @@ service.setHeadersExcept = function () {
 };
 
 service.changeIsWithCredentials = function (isWithCredentials) {
-    service.withCredentials = isWithCredentials;
+    service.defaults.withCredentials = isWithCredentials;
 };
 
 service.setResultCodeHandler = function (fn) {

@@ -1,6 +1,6 @@
 {
   "name": "castle-haozijunqaq-utils",
-  "version": "1.7.6",
+  "version": "1.7.10",
   "description": "Common development utils",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.11",
     "qs": "^6.6.0"
   },
   "devDependencies": {
