@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 exports.default = {
@@ -70,18 +72,14 @@ exports.default = {
     /**
      * 压缩(放大)图片
      * @param imgFile {File} 图片文件对象
-     * @param widthScale {Number} 宽度缩放倍率
-     * @param heightScale {Number} 高度缩放倍率
+     * @param scale {Number} 压缩率
      * @param mime {String} 文件类型
      * @return {Promise<*|File>}
      */
     $compressImage: function $compressImage(imgFile) {
-        var widthScale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
         var _this2 = this;
 
-        var heightScale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-        var mime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'image/png';
+        var scale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
         return new Promise(function (resolve, reject) {
             var canvas = document.createElement('canvas');
@@ -94,15 +92,91 @@ exports.default = {
             _this2.$imgLoad(imgElement).then(function (res) {
                 var imgWidth = imgElement.width;
                 var imgHeight = imgElement.height;
-                canvas.width = imgWidth * widthScale;
-                canvas.height = imgHeight * heightScale;
+                canvas.width = imgWidth * scale;
+                canvas.height = imgHeight * scale;
                 context.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-                var base64 = canvas.toDataURL(mime);
+                var base64 = canvas.toDataURL('image/jpeg');
                 document.body.removeChild(imgElement);
                 resolve(_this2.$convertBase64ToFile(base64, fileName));
             }).catch(function (e) {
                 reject(e);
             });
+        });
+    },
+
+
+    /**
+     * 压缩(放大)图片大小
+     * @param imgFile {File} 图片文件对象
+     * @param maxSize {Number} 文件大小基准点
+     * @param isFixSize {Boolean} 是否开启文件大小修正 开启后会等到精度更高的压缩效果
+     * @return {Promise<*|File>}
+     */
+    $compressImageSize: function $compressImageSize(imgFile) {
+        var _this3 = this;
+
+        var maxSize = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100 * 1024;
+        var isFixSize = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+        function appendCanvas(img) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            var imgUrl = window.URL.createObjectURL(img);
+            var imgElement = document.createElement('img');
+            imgElement.src = imgUrl;
+            document.body.appendChild(imgElement);
+            return [canvas, imgElement, context];
+        }
+        return new Promise(function (resolve, reject) {
+            if (isFixSize) {
+                _this3.$compressImageSize(imgFile, maxSize, false).then(function (file) {
+                    var fileName = file.name;
+                    var fileSize = file.size;
+                    if (fileSize <= maxSize) {
+                        resolve(file);
+                        return;
+                    }
+                    var scale = (fileSize / maxSize).toFixed(2);
+
+                    var _appendCanvas = appendCanvas(file),
+                        _appendCanvas2 = _slicedToArray(_appendCanvas, 3),
+                        canvas = _appendCanvas2[0],
+                        imgElement = _appendCanvas2[1],
+                        context = _appendCanvas2[2];
+
+                    _this3.$imgLoad(imgElement).then(function (res) {
+                        var imgWidth = imgElement.width;
+                        var imgHeight = imgElement.height;
+                        canvas.width = imgWidth / Math.sqrt(scale);
+                        canvas.height = imgHeight / Math.sqrt(scale);
+                        context.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+                        var base64 = canvas.toDataURL('image/jpeg', 1);
+                        document.body.removeChild(imgElement);
+                        resolve(_this3.$convertBase64ToFile(base64, fileName));
+                    }).catch(function (e) {
+                        reject(e);
+                    });
+                });
+            } else {
+                var _appendCanvas3 = appendCanvas(imgFile),
+                    _appendCanvas4 = _slicedToArray(_appendCanvas3, 3),
+                    canvas = _appendCanvas4[0],
+                    imgElement = _appendCanvas4[1],
+                    context = _appendCanvas4[2];
+
+                _this3.$imgLoad(imgElement).then(function (res) {
+                    var imgWidth = imgElement.width;
+                    var imgHeight = imgElement.height;
+                    canvas.width = imgWidth;
+                    canvas.height = imgHeight;
+                    context.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+                    var base64 = canvas.toDataURL('image/jpeg', 1);
+                    document.body.removeChild(imgElement);
+                    resolve(_this3.$convertBase64ToFile(base64, imgFile.name));
+                }).catch(function (e) {
+                    reject(e);
+                });
+            }
         });
     },
 

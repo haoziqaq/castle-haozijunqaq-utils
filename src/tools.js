@@ -47,12 +47,11 @@ export default {
     /**
      * 压缩(放大)图片
      * @param imgFile {File} 图片文件对象
-     * @param widthScale {Number} 宽度缩放倍率
-     * @param heightScale {Number} 高度缩放倍率
+     * @param scale {Number} 压缩率
      * @param mime {String} 文件类型
      * @return {Promise<*|File>}
      */
-    $compressImage(imgFile, widthScale = 1, heightScale = 1, mime = 'image/png') {
+    $compressImage(imgFile, scale = 1) {
         return new Promise((resolve, reject) => {
             let canvas = document.createElement('canvas');
             let context = canvas.getContext('2d');
@@ -64,10 +63,10 @@ export default {
             this.$imgLoad(imgElement).then(res => {
                 let imgWidth = imgElement.width;
                 let imgHeight = imgElement.height;
-                canvas.width = imgWidth * widthScale;
-                canvas.height = imgHeight * heightScale;
+                canvas.width = imgWidth * scale;
+                canvas.height = imgHeight * scale;
                 context.drawImage(imgElement, 0 ,0 ,canvas.width, canvas.height);
-                let base64 = canvas.toDataURL(mime);
+                let base64 = canvas.toDataURL('image/jpeg');
                 document.body.removeChild(imgElement);
                 resolve(this.$convertBase64ToFile(base64, fileName))
             }).catch(e => {
@@ -75,6 +74,66 @@ export default {
             })
         })
     },
+
+    /**
+     * 压缩(放大)图片大小
+     * @param imgFile {File} 图片文件对象
+     * @param maxSize {Number} 文件大小基准点
+     * @param isFixSize {Boolean} 是否开启文件大小修正 开启后会等到精度更高的压缩效果
+     * @return {Promise<*|File>}
+     */
+    $compressImageSize(imgFile, maxSize = 100 * 1024, isFixSize = true) {
+        function appendCanvas(img) {
+            let canvas = document.createElement('canvas');
+            let context = canvas.getContext('2d');
+            let imgUrl = window.URL.createObjectURL(img);
+            let imgElement = document.createElement('img');
+            imgElement.src = imgUrl;
+            document.body.appendChild(imgElement);
+            return [canvas, imgElement, context]
+        }
+        return new Promise((resolve, reject) => {
+            if (isFixSize) {
+                this.$compressImageSize(imgFile, maxSize, false).then(file => {
+                    let fileName = file.name;
+                    let fileSize = file.size;
+                    if (fileSize <= maxSize) {
+                        resolve(file);
+                        return
+                    }
+                    let scale = (fileSize / maxSize).toFixed(2);
+                    let [canvas, imgElement, context] = appendCanvas(file);
+                    this.$imgLoad(imgElement).then(res => {
+                        let imgWidth = imgElement.width;
+                        let imgHeight = imgElement.height;
+                        canvas.width = imgWidth / Math.sqrt(scale);
+                        canvas.height = imgHeight / Math.sqrt(scale);
+                        context.drawImage(imgElement, 0 ,0 ,canvas.width, canvas.height);
+                        let base64 = canvas.toDataURL('image/jpeg', 1);
+                        document.body.removeChild(imgElement);
+                        resolve(this.$convertBase64ToFile(base64, fileName))
+                    }).catch(e => {
+                        reject(e)
+                    })
+                })
+            } else {
+                let [canvas, imgElement, context] = appendCanvas(imgFile);
+                this.$imgLoad(imgElement).then(res => {
+                    let imgWidth = imgElement.width;
+                    let imgHeight = imgElement.height;
+                    canvas.width = imgWidth;
+                    canvas.height = imgHeight;
+                    context.drawImage(imgElement, 0 ,0 ,canvas.width, canvas.height);
+                    let base64 = canvas.toDataURL('image/jpeg', 1);
+                    document.body.removeChild(imgElement);
+                    resolve(this.$convertBase64ToFile(base64, imgFile.name))
+                }).catch(e => {
+                    reject(e)
+                })
+            }
+        })
+    },
+
 
     /**
      * 将base64转成file对象

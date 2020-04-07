@@ -17,4 +17,7 @@ export declare const axios: {
     changeIsWithCredentials: (withCredentials: boolean) => void,
     setResultCodeHandler: (codeHandler: Function) => void,
 };
+export declare const vueRouterUtils: {
+  compose: (routes?: any[]) => any[]
+};
 
