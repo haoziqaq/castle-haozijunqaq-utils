@@ -19,9 +19,9 @@ var chrsz   = 8;  /* bits per input character. 8 - ASCII; 16 - Unicode      */
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-export function $md5Hex(s){ return binl2hex(core_md5(str2binl(s), s.length * chrsz));}
-export function $md5B64(s){ return binl2b64(core_md5(str2binl(s), s.length * chrsz));}
-export function $md5Str(s){ return binl2str(core_md5(str2binl(s), s.length * chrsz));}
+export function md5Hex(s){ return binl2hex(core_md5(str2binl(s), s.length * chrsz));}
+export function md5B64(s){ return binl2b64(core_md5(str2binl(s), s.length * chrsz));}
+export function md5Str(s){ return binl2str(core_md5(str2binl(s), s.length * chrsz));}
 function hex_hmac_md5(key, data) { return binl2hex(core_hmac_md5(key, data)); }
 function b64_hmac_md5(key, data) { return binl2b64(core_hmac_md5(key, data)); }
 function str_hmac_md5(key, data) { return binl2str(core_hmac_md5(key, data)); }

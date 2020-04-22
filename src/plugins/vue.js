@@ -1,14 +1,13 @@
 import axios from '../axios'
 import exp from '../exp'
-import formatter from '../formatter'
 import tools from '../tools'
 import * as md5 from '../md5'
 
 export default {
     install(Vue, options) {
-        Object.keys(formatter).forEach(key => {
-            Vue.filter(`${key}`, formatter[key]);
-            Vue.prototype[`${key}`] = formatter[key]
+        Object.keys(tools).forEach(key => {
+            Vue.filter(`${key}`, tools[key]);
+            Vue.prototype[`${key}`] = tools[key]
         });
 
         Object.keys(exp).forEach(key => {

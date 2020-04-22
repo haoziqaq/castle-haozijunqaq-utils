@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.$md5Hex = $md5Hex;
-exports.$md5B64 = $md5B64;
-exports.$md5Str = $md5Str;
+exports.md5Hex = md5Hex;
+exports.md5B64 = md5B64;
+exports.md5Str = md5Str;
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
  * Digest Algorithm, as defined in RFC 1321.
@@ -27,13 +27,13 @@ var chrsz = 8; /* bits per input character. 8 - ASCII; 16 - Unicode      */
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function $md5Hex(s) {
+function md5Hex(s) {
   return binl2hex(core_md5(str2binl(s), s.length * chrsz));
 }
-function $md5B64(s) {
+function md5B64(s) {
   return binl2b64(core_md5(str2binl(s), s.length * chrsz));
 }
-function $md5Str(s) {
+function md5Str(s) {
   return binl2str(core_md5(str2binl(s), s.length * chrsz));
 }
 function hex_hmac_md5(key, data) {

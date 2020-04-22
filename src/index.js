@@ -1,4 +1,3 @@
-import f from './formatter'
 import a from './axios'
 import e from './exp'
 import t from './tools'
@@ -8,7 +7,6 @@ import * as m from './md5'
 import vru from './vueRouterUtils'
 
 
-export const formatter = f;
 export const exp = e;
 export const tools = t;
 export const vuePlugin = v;

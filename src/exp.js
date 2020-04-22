@@ -1,7 +1,7 @@
 //简易手机号
-const easyMobliephone = /^1\d{10}$/;
+const easyMobilePhone = /^1\d{10}$/;
 //手机号
-const mobilephone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0-9])|(19[0-9]))\d{8}$/;
+const mobilePhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0-9])|(19[0-9]))\d{8}$/;
 //国内座机
 const telephone = /\d{3}-\d{8}|\d{4}-\d{7}/;
 //身份证
@@ -18,36 +18,31 @@ const WX = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;
 const includeCN = /[\u4E00-\u9FA5]/;
 //只有中文
 const onlyCN = /^[\u4e00-\u9fa5]*$/;
-//密码魔鬼强度正则，最少6位，包含数字，大写字母，小写字母，特殊字符
-const devilPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[-_!@#$%^&*?]).*$/;
-//密码困难强度正则，最少6位，包含数字，大写字母，小写字母
-const hardPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/;
-//密码普通强度正则，最少6位，包含数字，字母
-const normalPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[a-zA-Z]).*$/;
-//密码简单强度正则，最少6位，包含数字
-const simplePWD = /^.*(?=.{6,})(?=.*\d).*$/;
 //URL
 const URL = /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
+//HTTP
+const HTTP = /^(http:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
+//HTTPS
+const HTTPS = /^(https:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
 //中国邮政编码
 const postalCode = /[1-9]\d{5}(?!\d)/;
 //邮箱验证
 const email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+
 export default {
-    $isEasyMobliephone: value => easyMobliephone.test(value),
-    $isMobilephone: value => mobilephone.test(value),
-    $isTelephone: value => telephone.test(value),
-    $isIdCard: value => idCard.test(value),
-    $isIpV4: value => ipV4.test(value),
-    $isHex: value => hex.test(value),
-    $isQQ: value => QQ.test(value),
-    $isWX: value => WX.test(value),
-    $isIncludeCN: value => includeCN.test(value),
-    $isOnlyCN: value => onlyCN.test(value),
-    $isDevilPWD: value => devilPWD.test(value),
-    $isHardPWD: value => hardPWD.test(value),
-    $isNormalPWD: value => normalPWD.test(value),
-    $isSimplePWD: value => simplePWD.test(value),
-    $isURL: value => URL.test(value),
-    $isPostalCode: value => postalCode.test(value),
-    $isEmail: value => email.test(value)
+    isEasyMobilePhone: value => easyMobilePhone.test(value),
+    isMobilePhone: value => mobilePhone.test(value),
+    isTelephone: value => telephone.test(value),
+    isIdCard: value => idCard.test(value),
+    isIpV4: value => ipV4.test(value),
+    isHex: value => hex.test(value),
+    isQQ: value => QQ.test(value),
+    isWX: value => WX.test(value),
+    isIncludeCN: value => includeCN.test(value),
+    isOnlyCN: value => onlyCN.test(value),
+    isURL: value => URL.test(value),
+    isHTTP: value => HTTP.test(value),
+    isHTTPS: value => HTTPS.test(value),
+    isPostalCode: value => postalCode.test(value),
+    isEmail: value => email.test(value)
 }

@@ -12,10 +12,6 @@ var _exp = require('../exp');
 
 var _exp2 = _interopRequireDefault(_exp);
 
-var _formatter = require('../formatter');
-
-var _formatter2 = _interopRequireDefault(_formatter);
-
 var _tools = require('../tools');
 
 var _tools2 = _interopRequireDefault(_tools);
@@ -30,9 +26,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     install: function install(Vue, options) {
-        Object.keys(_formatter2.default).forEach(function (key) {
-            Vue.filter('' + key, _formatter2.default[key]);
-            Vue.prototype['' + key] = _formatter2.default[key];
+        Object.keys(_tools2.default).forEach(function (key) {
+            Vue.filter('' + key, _tools2.default[key]);
+            Vue.prototype['' + key] = _tools2.default[key];
         });
 
         Object.keys(_exp2.default).forEach(function (key) {

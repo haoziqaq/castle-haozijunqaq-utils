@@ -159,6 +159,17 @@ service.addHeader = function () {
     headerOptions.push([key, value]);
 };
 
+service.removeHeader = function () {
+    var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+    var index = headerOptions.findIndex(function (option) {
+        return option[0] === key;
+    });
+    if (index >= 0) {
+        headerOptions.splice(index, 1);
+    }
+};
+
 service.setHeadersExcept = function () {
     var URLs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 

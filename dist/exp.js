@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 //简易手机号
-var easyMobliephone = /^1\d{10}$/;
+var easyMobilePhone = /^1\d{10}$/;
 //手机号
-var mobilephone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0-9])|(19[0-9]))\d{8}$/;
+var mobilePhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0-9])|(19[0-9]))\d{8}$/;
 //国内座机
 var telephone = /\d{3}-\d{8}|\d{4}-\d{7}/;
 //身份证
@@ -23,70 +23,61 @@ var WX = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;
 var includeCN = /[\u4E00-\u9FA5]/;
 //只有中文
 var onlyCN = /^[\u4e00-\u9fa5]*$/;
-//密码魔鬼强度正则，最少6位，包含数字，大写字母，小写字母，特殊字符
-var devilPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[-_!@#$%^&*?]).*$/;
-//密码困难强度正则，最少6位，包含数字，大写字母，小写字母
-var hardPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/;
-//密码普通强度正则，最少6位，包含数字，字母
-var normalPWD = /^.*(?=.{6,})(?=.*\d)(?=.*[a-zA-Z]).*$/;
-//密码简单强度正则，最少6位，包含数字
-var simplePWD = /^.*(?=.{6,})(?=.*\d).*$/;
 //URL
 var URL = /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
+//HTTP
+var HTTP = /^(http:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
+//HTTPS
+var HTTPS = /^(https:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i;
 //中国邮政编码
 var postalCode = /[1-9]\d{5}(?!\d)/;
 //邮箱验证
 var email = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+
 exports.default = {
-    $isEasyMobliephone: function $isEasyMobliephone(value) {
-        return easyMobliephone.test(value);
+    isEasyMobilePhone: function isEasyMobilePhone(value) {
+        return easyMobilePhone.test(value);
     },
-    $isMobilephone: function $isMobilephone(value) {
-        return mobilephone.test(value);
+    isMobilePhone: function isMobilePhone(value) {
+        return mobilePhone.test(value);
     },
-    $isTelephone: function $isTelephone(value) {
+    isTelephone: function isTelephone(value) {
         return telephone.test(value);
     },
-    $isIdCard: function $isIdCard(value) {
+    isIdCard: function isIdCard(value) {
         return idCard.test(value);
     },
-    $isIpV4: function $isIpV4(value) {
+    isIpV4: function isIpV4(value) {
         return ipV4.test(value);
     },
-    $isHex: function $isHex(value) {
+    isHex: function isHex(value) {
         return hex.test(value);
     },
-    $isQQ: function $isQQ(value) {
+    isQQ: function isQQ(value) {
         return QQ.test(value);
     },
-    $isWX: function $isWX(value) {
+    isWX: function isWX(value) {
         return WX.test(value);
     },
-    $isIncludeCN: function $isIncludeCN(value) {
+    isIncludeCN: function isIncludeCN(value) {
         return includeCN.test(value);
     },
-    $isOnlyCN: function $isOnlyCN(value) {
+    isOnlyCN: function isOnlyCN(value) {
         return onlyCN.test(value);
     },
-    $isDevilPWD: function $isDevilPWD(value) {
-        return devilPWD.test(value);
-    },
-    $isHardPWD: function $isHardPWD(value) {
-        return hardPWD.test(value);
-    },
-    $isNormalPWD: function $isNormalPWD(value) {
-        return normalPWD.test(value);
-    },
-    $isSimplePWD: function $isSimplePWD(value) {
-        return simplePWD.test(value);
-    },
-    $isURL: function $isURL(value) {
+    isURL: function isURL(value) {
         return URL.test(value);
     },
-    $isPostalCode: function $isPostalCode(value) {
+    isHTTP: function isHTTP(value) {
+        return HTTP.test(value);
+    },
+    isHTTPS: function isHTTPS(value) {
+        return HTTPS.test(value);
+    },
+    isPostalCode: function isPostalCode(value) {
         return postalCode.test(value);
     },
-    $isEmail: function $isEmail(value) {
+    isEmail: function isEmail(value) {
         return email.test(value);
     }
 };

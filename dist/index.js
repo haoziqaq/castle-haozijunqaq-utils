@@ -3,11 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.vueRouterUtils = exports.axios = exports.md5 = exports.reactPlugin = exports.vuePlugin = exports.tools = exports.exp = exports.formatter = undefined;
-
-var _formatter = require('./formatter');
-
-var _formatter2 = _interopRequireDefault(_formatter);
+exports.vueRouterUtils = exports.axios = exports.md5 = exports.reactPlugin = exports.vuePlugin = exports.tools = exports.exp = undefined;
 
 var _axios = require('./axios');
 
@@ -41,7 +37,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var formatter = exports.formatter = _formatter2.default;
 var exp = exports.exp = _exp2.default;
 var tools = exports.tools = _tools2.default;
 var vuePlugin = exports.vuePlugin = _vue2.default;
