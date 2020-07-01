@@ -395,11 +395,11 @@ exports.default = {
      */
     throttle: function throttle(method, mustRunDelay) {
         var timer = void 0;
-        var args = arguments;
         var start = void 0;
         return function loop() {
             var self = this;
             var now = Date.now();
+            var args = arguments;
             if (!start) {
                 start = now;
             }

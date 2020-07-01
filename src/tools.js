@@ -337,11 +337,11 @@ export default {
      */
     throttle(method, mustRunDelay) {
         let timer;
-        let args = arguments;
         let start;
         return function loop() {
             let self = this;
             let now = Date.now();
+            let args = arguments;
             if(!start){
                 start = now;
             }
