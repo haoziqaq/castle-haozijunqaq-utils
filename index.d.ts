@@ -46,9 +46,13 @@ export declare const vuePlugin: any;
 export declare function reactPlugin(): any;
 export declare const axios: {
     getData: (url: string, params?: any, config?: any) => Promise<any>,
+    deleteData: (url: string, params?: any, config?: any) => Promise<any>,
+    headData: (url: string, params?: any, config?: any) => Promise<any>,
     getBlob: (url: string, params?: any, config?: any) => Promise<any>,
     postData: (url: string, params?: any, config?: any) => Promise<any>,
+    putData: (url: string, params?: any, config?: any) => Promise<any>,
     postJSON: (url: string, params?: any, config?: any) => Promise<any>,
+    putJSON: (url: string, params?: any, config?: any) => Promise<any>,
     postMultipart: (url: string, params?: any, config?: any) => Promise<any>,
     setBaseUrl: (baseUrl: string) => void,
     setTimeout: (timeout: number) => void,

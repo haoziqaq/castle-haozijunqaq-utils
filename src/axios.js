@@ -31,29 +31,59 @@ service.interceptors.response.use(
     }
 );
 
-service.getData = (url, par, options = {}) => {
-    let queryParams = {
-        params: {
-            _t: new Date().getTime()
+['getData','deleteData','headData'].forEach((item) => {
+    service[item] = (url, par, options = {}) => {
+        let queryParams = {
+            params: {
+                _t: new Date().getTime()
+            }
+        };
+        if (par) {
+            let params = Object.assign(queryParams.params, par);
+            queryParams = {
+                params
+            }
         }
+        queryParams = Object.assign(queryParams, options);
+        return new Promise((resolve, reject) => {
+            service[item.replace(/Data/g,'')](url, queryParams)
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
     };
-    if (par) {
-        let params = Object.assign(queryParams.params, par);
-        queryParams = {
-            params
-        }
-    }
-    queryParams = Object.assign(queryParams, options);
-    return new Promise((resolve, reject) => {
-        service.get(url, queryParams)
-            .then(res => {
-                resolve(res);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-};
+});
+
+['postData','putData'].forEach((item) => {
+    service[item] = (url, params, options = {}) => {
+        return new Promise((resolve, reject) => {
+            service[item.replace(/Data/g,'')](url, qs.stringify(params), options)
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    };
+});
+
+['postJSON','putJSON'].forEach((item) => {
+    service[item] = (url, params, options = {}) => {
+        return new Promise((resolve, reject) => {
+            service[item.replace(/JSON/g,'')](url, params, options)
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    };
+});
 
 service.getBlob = (url, par, options = {}) => {
     let queryParams = {
@@ -82,17 +112,8 @@ service.getBlob = (url, par, options = {}) => {
     });
 };
 
-service.postData = (url, params, options = {}) => {
-    return new Promise((resolve, reject) => {
-        service.post(url, qs.stringify(params), options)
-            .then(res => {
-                resolve(res);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-};
+
+
 
 service.postJSON = (url, params, options = {}) => {
     return new Promise((resolve, reject) => {
