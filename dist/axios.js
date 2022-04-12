@@ -44,29 +44,59 @@ service.interceptors.response.use(function (response) {
     return error.response;
 });
 
-service.getData = function (url, par) {
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+['getData', 'deleteData', 'headData'].forEach(function (item) {
+    service[item] = function (url, par) {
+        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-    var queryParams = {
-        params: {
-            _t: new Date().getTime()
-        }
-    };
-    if (par) {
-        var params = Object.assign(queryParams.params, par);
-        queryParams = {
-            params: params
+        var queryParams = {
+            params: {
+                _t: new Date().getTime()
+            }
         };
-    }
-    queryParams = Object.assign(queryParams, options);
-    return new Promise(function (resolve, reject) {
-        service.get(url, queryParams).then(function (res) {
-            resolve(res);
-        }).catch(function (error) {
-            reject(error);
+        if (par) {
+            var params = Object.assign(queryParams.params, par);
+            queryParams = {
+                params: params
+            };
+        }
+        queryParams = Object.assign(queryParams, options);
+        return new Promise(function (resolve, reject) {
+            service[item.replace(/Data/g, '')](url, queryParams).then(function (res) {
+                resolve(res);
+            }).catch(function (error) {
+                reject(error);
+            });
         });
-    });
-};
+    };
+});
+
+['postData', 'putData'].forEach(function (item) {
+    service[item] = function (url, params) {
+        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+        return new Promise(function (resolve, reject) {
+            service[item.replace(/Data/g, '')](url, _qs2.default.stringify(params), options).then(function (res) {
+                resolve(res);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
+    };
+});
+
+['postJSON', 'putJSON', 'deleteJSON'].forEach(function (item) {
+    service[item] = function (url, params) {
+        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+        return new Promise(function (resolve, reject) {
+            service[item.replace(/JSON/g, '')](url, params, options).then(function (res) {
+                resolve(res);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
+    };
+});
 
 service.getBlob = function (url, par) {
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -88,18 +118,6 @@ service.getBlob = function (url, par) {
     queryParams = Object.assign(queryParams, config, options);
     return new Promise(function (resolve, reject) {
         service.get(url, queryParams).then(function (res) {
-            resolve(res);
-        }).catch(function (error) {
-            reject(error);
-        });
-    });
-};
-
-service.postData = function (url, params) {
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    return new Promise(function (resolve, reject) {
-        service.post(url, _qs2.default.stringify(params), options).then(function (res) {
             resolve(res);
         }).catch(function (error) {
             reject(error);

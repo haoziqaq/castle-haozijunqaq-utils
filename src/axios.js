@@ -71,7 +71,7 @@ service.interceptors.response.use(
     };
 });
 
-['postJSON','putJSON'].forEach((item) => {
+['postJSON','putJSON','deleteJSON'].forEach((item) => {
     service[item] = (url, params, options = {}) => {
         return new Promise((resolve, reject) => {
             service[item.replace(/JSON/g,'')](url, params, options)
